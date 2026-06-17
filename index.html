@@ -30,9 +30,11 @@
         </div>
     </div>
 
-    <div class="max-w-5xl mx-auto px-4 mt-8 space-y-6">
-        <div id="app-engine"></div>
-    </div>
+    <div class="max-w-5xl mx-auto px-4 mt-8 space-y-6" id="root"></div>
+
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel">
         // GLOBAL UNIVERSAL SUBJECT CONFIGURATION INDEX
@@ -87,20 +89,18 @@
                 if (window.lucide) window.lucide.createIcons();
             }, [screen, activeTabs, expandedUnits]);
 
-            const launchVideoResource = (query, prefix = "") => {
-                const finalQuery = prefix ? `${prefix} ${query}` : query;
+            const launchVideoResource = (topic) => {
+                const finalQuery = `${selectedSub} ${selectedSem} sem ${topic}`;
                 window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(finalQuery)}`, '_blank');
             };
 
-            // DYNAMIC INTELLIGENT SYLLABUS DISCOVERY MACHINE
             const resolveSyllabusData = () => {
                 if (HARDCODED_DB[selectedProg] && HARDCODED_DB[selectedProg][selectedSub] && HARDCODED_DB[selectedProg][selectedSub][selectedCat] && HARDCODED_DB[selectedProg][selectedSub][selectedCat][selectedSem]) {
                     return HARDCODED_DB[selectedProg][selectedSub][selectedCat][selectedSem];
                 }
                 
-                // MOCK AUTO-GENERATION ALGORITHM FOR ABSOLUTE COMPLETENESS ACROSS BA / BSC / BCOM
                 return [{
-                    title: `${selectedSub} Comprehensive Structure`,
+                    title: `${selectedSub} Syllabus Framework`,
                     code: `${selectedCat}-${selectedSem.replace('st','').replace('nd','').replace('rd','').replace('th','')}`,
                     credits: "5 Credits Total",
                     isGenerated: true,
@@ -121,7 +121,7 @@
                 }];
             };
 
-            // SCREEN 1: FACULTY HOME
+            // SCREEN 1: HOME
             if (screen === 'home') {
                 return (
                     <div class="smooth-fade space-y-6">
@@ -150,7 +150,7 @@
                 );
             }
 
-            // SCREEN 2: SUBJECTS MATRIX
+            // SCREEN 2: SUBJECTS
             if (screen === 'subject') {
                 const list = SUBJECTS_MAP[selectedProg] || [];
                 return (
@@ -167,7 +167,7 @@
                             {list.map(s => (
                                 <div key={s.name} onClick={() => { setSelectedSub(s.name); setScreen('category'); }} class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between cursor-pointer hover:bg-slate-50">
                                     <div class="flex items-center gap-4">
-                                        <div class={`w-12 h-12 rounded-xl flex items-center justify-center ${s.bg}`}><i data-lucide={s.icon}></i></div>
+                                        <div class={`w-12 h-12 rounded-xl flex items-center justify-center ${s.bg}`}><i data-lucide={s.icon} class="w-5 h-5"></i></div>
                                         <div>
                                             <h4 class="font-bold text-slate-800">{s.name}</h4>
                                             <p class="text-slate-400" style={{fontSize:'10px'}}>{selectedProg} CORE DISCIPLINE</p>
@@ -181,7 +181,7 @@
                 );
             }
 
-            // SCREEN 3: BASKET CATEGORIES
+            // SCREEN 3: CATEGORY
             if (screen === 'category') {
                 const cats = [
                     { id: 'MJC', t: 'MJC', sub: 'Major Core Course', icon: 'book-open' },
@@ -214,7 +214,7 @@
                 );
             }
 
-            // SCREEN 4: SEMESTER GATES
+            // SCREEN 4: SEMESTERS
             if (screen === 'semester') {
                 return (
                     <div class="smooth-fade space-y-6">
@@ -241,7 +241,7 @@
                 );
             }
 
-            // SCREEN 5: FINAL SYSTEM SYLLABUS GATEWAY Portal
+            // SCREEN 5: FINAL ACADEMIC PORTAL
             if (screen === 'portal') {
                 const dataset = resolveSyllabusData();
 
@@ -254,11 +254,10 @@
                         <div class="text-center space-y-0.5">
                             <div class="text-xl">🎓</div>
                             <h2 class="text-xl font-black text-slate-800">Academic Portal</h2>
-                            <p class="text-xs text-slate-400">Detailed dynamic syllabus dashboard</p>
+                            <p class="text-xs text-slate-400">Detailed syllabus dashboard</p>
                         </div>
 
                         <div class="grid grid-cols-4 gap-2 bg-slate-200/60 p-2 rounded-xl text-center border border-slate-300/40">
                             <div class="bg-white p-1.5 rounded-lg"><p class="text-slate-400" style={{fontSize:'8px'}}>PROGRAM</p><p class="text-xs font-black text-slate-800">{selectedProg}</p></div>
                             <div class="bg-white p-1.5 rounded-lg"><p class="text-slate-400" style={{fontSize:'8px'}}>SUBJECT</p><p class="text-xs font-black text-slate-800 truncate">{selectedSub}</p></div>
-                            <div class="bg-white p-1.5 rounded-lg"><p class="text-slate-400" style={{fontSize:'8px'}}>CATEGORY</p><p class="text-xs font-black text-slate-800">{selectedCat}</p></div>
- 
+                            <div class="bg-white p-1.5 rounded-lg"><p class="text-slate-400" style={{fontSize:'8px'}}>CATEGORY</p><p class="text-xs font-black text-slate
