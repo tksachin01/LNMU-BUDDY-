@@ -10,9 +10,10 @@
         body { background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
         .custom-card-shadow { box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 8px 15px -6px rgba(0, 0, 0, 0.03); }
         .tab-active { border-bottom: 2px solid #2563eb; color: #2563eb; font-weight: bold; background-color: #f8fafc; }
-        .rotate-icon { transform: rotate(180deg); transition: transform 0.2s ease; }
-        .smooth-fade { animation: fadeIn 0.2s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+        .rotate-icon { transform: rotate(180deg); }
+        .smooth-fade { animation: fadeIn 0.15s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(2px); } to { opacity: 1; transform: translateY(0); } }
+        .hidden-screen { display: none !important; }
     </style>
 </head>
 <body class="pb-12">
@@ -21,7 +22,7 @@
         <div class="max-w-5xl mx-auto flex items-center gap-3">
             <div class="relative flex items-center justify-center w-12 h-12 bg-white/10 rounded-full border border-white/20">
                 <i data-lucide="scroll" class="text-yellow-400 absolute left-1.5 top-3 w-6 h-6 transform -rotate-12"></i>
-                <i data-lucide="graduation-cap" class="text-white absolute right-1 top-1.5 w-8 h-8 z-10 filter drop-shadow-md"></i>
+                <i data-lucide="graduation-cap" class="text-white absolute right-1 top-1.5 w-8 h-8 filter drop-shadow-md"></i>
             </div>
             <div>
                 <h1 class="font-extrabold text-lg tracking-wider text-white">LNMU BUDDY</h1>
@@ -30,234 +31,266 @@
         </div>
     </div>
 
-    <div class="max-w-5xl mx-auto px-4 mt-8 space-y-6" id="root"></div>
+    <div class="max-w-5xl mx-auto px-4 mt-8 space-y-6">
 
-    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <div id="screen-home" class="smooth-fade space-y-6">
+            <div class="text-center space-y-1">
+                <h2 class="text-2xl font-bold text-slate-800">Academic Programs</h2>
+                <p class="text-xs text-blue-500">Select a faculty to explore specialized subjects, majors, and syllabus details.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                <div onclick="navigate('home', 'subject', 'BA')" class="bg-white p-6 rounded-2xl custom-card-shadow text-center border border-gray-100 cursor-pointer transform hover:-translate-y-1 transition-all">
+                    <div class="w-14 h-14 bg-red-50 text-red-800 rounded-2xl flex items-center justify-center mx-auto mb-4"><i data-lucide="library" class="w-6 h-6"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800">B.A</h3>
+                    <p class="text-xs text-slate-400 mt-1">Bachelor of Arts</p>
+                </div>
+                <div onclick="navigate('home', 'subject', 'BSc')" class="bg-white p-6 rounded-2xl custom-card-shadow text-center border border-gray-100 cursor-pointer transform hover:-translate-y-1 transition-all">
+                    <div class="w-14 h-14 bg-blue-50 text-blue-800 rounded-2xl flex items-center justify-center mx-auto mb-4"><i data-lucide="atom" class="w-6 h-6"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800">B.Sc</h3>
+                    <p class="text-xs text-slate-400 mt-1">Bachelor of Science</p>
+                </div>
+                <div onclick="navigate('home', 'subject', 'BCom')" class="bg-white p-6 rounded-2xl custom-card-shadow text-center border border-gray-100 cursor-pointer transform hover:-translate-y-1 transition-all">
+                    <div class="w-14 h-14 bg-green-50 text-green-800 rounded-2xl flex items-center justify-center mx-auto mb-4"><i data-lucide="landmark" class="w-6 h-6"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800">B.Com</h3>
+                    <p class="text-xs text-slate-400 mt-1">Bachelor of Commerce</p>
+                </div>
+            </div>
+        </div>
 
-    <script type="text/babel">
-        // GLOBAL UNIVERSAL SUBJECT CONFIGURATION INDEX
-        const SUBJECTS_MAP = {
-            BA: [
-                { name: 'History', icon: 'landmark', bg: 'bg-red-50 text-red-700' },
-                { name: 'Political Science', icon: 'globe', bg: 'bg-purple-50 text-purple-700' },
-                { name: 'Hindi Literature', icon: 'library', bg: 'bg-amber-50 text-amber-700' },
-                { name: 'Economics', icon: 'briefcase', bg: 'bg-indigo-50 text-indigo-700' }
+        <div id="screen-subject" class="smooth-fade hidden-screen space-y-6">
+            <div class="flex items-center gap-2 text-xs font-semibold text-slate-400">
+                <i data-lucide="home" class="w-3.5 h-3.5"></i> Home <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="text-blue-600 breadcrumb-prog">Prog</span>
+            </div>
+            <button onclick="navigate('subject', 'home')" class="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-white px-3 py-1.5 rounded-lg border shadow-sm"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+            <div>
+                <p class="text-xs font-bold text-blue-500 tracking-wider uppercase current-prog-label">Faculty</p>
+                <h2 class="text-2xl font-black text-slate-800 mt-0.5">Select Subject</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="subject-container">
+                </div>
+        </div>
+
+        <div id="screen-category" class="smooth-fade hidden-screen space-y-6">
+            <div class="flex items-center gap-2 text-xs font-semibold text-slate-400">
+                <i data-lucide="home" class="w-3.5 h-3.5"></i> Home <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="breadcrumb-prog">Prog</span> <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="text-blue-600 breadcrumb-sub">Sub</span>
+            </div>
+            <button onclick="navigate('category', 'subject')" class="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-white px-3 py-1.5 rounded-lg border shadow-sm"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+            <div class="text-center">
+                <p class="text-xs font-bold text-blue-500 tracking-wider uppercase current-sub-label">DEPARTMENT</p>
+                <h2 class="text-2xl font-black text-slate-800 mt-0.5">Course Category</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="category-container">
+                </div>
+        </div>
+
+        <div id="screen-semester" class="smooth-fade hidden-screen space-y-6">
+            <div class="flex items-center gap-2 text-xs font-semibold text-slate-400">
+                <i data-lucide="home" class="w-3.5 h-3.5"></i> Home <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="breadcrumb-prog">Prog</span> <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="breadcrumb-sub">Sub</span> <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="text-blue-600 breadcrumb-cat">Cat</span>
+            </div>
+            <button onclick="navigate('semester', 'category')" class="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-white px-3 py-1.5 rounded-lg border shadow-sm"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+            <div>
+                <p class="text-xs font-bold text-blue-500 tracking-wider uppercase current-cat-label">Category</p>
+                <h2 class="text-2xl font-black text-slate-800 mt-0.5">Select Semester</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="semester-container">
+                </div>
+        </div>
+
+        <div id="screen-portal" class="smooth-fade hidden-screen max-w-2xl mx-auto space-y-6">
+            <div class="flex items-center gap-2 text-xs font-semibold text-slate-400">
+                <i data-lucide="home" class="w-3.5 h-3.5"></i> Home <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="breadcrumb-prog">Prog</span> <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="breadcrumb-sub">Sub</span> <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="breadcrumb-cat">Cat</span> <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="text-blue-600 breadcrumb-sem">Sem</span>
+            </div>
+
+            <div class="text-center space-y-0.5">
+                <div class="text-xl">🎓</div>
+                <h2 class="text-xl font-black text-slate-800">Academic Portal</h2>
+                <p class="text-xs text-slate-400">Detailed syllabus portal matching video architecture</p>
+            </div>
+
+            <div class="grid grid-cols-4 gap-2 bg-gray-200/60 p-2 rounded-xl text-center border border-gray-300/40">
+                <div class="bg-white p-1.5 rounded-lg"><p class="text-gray-400" style="font-size:8px">PROGRAM</p><p class="text-xs font-black text-slate-800 id-metric-prog">B.Sc</p></div>
+                <div class="bg-white p-1.5 rounded-lg"><p class="text-gray-400" style="font-size:8px">SUBJECT</p><p class="text-xs font-black text-slate-800 truncate id-metric-sub">Botany</p></div>
+                <div class="bg-white p-1.5 rounded-lg"><p class="text-gray-400" style="font-size:8px">CATEGORY</p><p class="text-xs font-black text-slate-800 id-metric-cat">MJC</p></div>
+                <div class="bg-white p-1.5 rounded-lg"><p class="text-gray-400" style="font-size:8px">TERM</p><p class="text-xs font-black text-slate-800 id-metric-sem">3rd Sem</p></div>
+            </div>
+
+            <div id="portal-cards-target" class="space-y-4"></div>
+
+            <div class="flex gap-3">
+                <button onclick="navigate('portal', 'semester')" class="flex-1 py-2.5 text-center text-xs font-bold bg-white text-slate-700 border rounded-xl shadow-2xs">Back</button>
+                <button onclick="navigate('portal', 'home')" class="flex-1 py-2.5 text-center text-xs font-bold bg-blue-600 text-white rounded-xl shadow-sm">Explore Another Course</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // GLOBAL STATE ENGINE
+        let state = { prog: '', sub: '', cat: '', sem: '', tab: 'theory' };
+
+        // GLOBAL CONFIG REFERENCE DATA
+        const CONFIG = {
+            subjects: {
+                BA: [
+                    { name: 'History', icon: 'landmark', bg: 'bg-red-50 text-red-700' },
+                    { name: 'Political Science', icon: 'globe', bg: 'bg-purple-50 text-purple-700' },
+                    { name: 'Hindi Literature', icon: 'library', bg: 'bg-amber-50 text-amber-700' },
+                    { name: 'Economics', icon: 'briefcase', bg: 'bg-indigo-50 text-indigo-700' }
+                ],
+                BSc: [
+                    { name: 'Botany', icon: 'leaf', bg: 'bg-green-50 text-green-700' },
+                    { name: 'Physics', icon: 'atom', bg: 'bg-blue-50 text-blue-700' },
+                    { name: 'Chemistry', icon: 'beaker', bg: 'bg-pink-50 text-pink-700' },
+                    { name: 'Mathematics', icon: 'variable', bg: 'bg-cyan-50 text-cyan-700' }
+                ],
+                BCom: [
+                    { name: 'Financial Accounting', icon: 'landmark', bg: 'bg-emerald-50 text-emerald-700' },
+                    { name: 'Business Management', icon: 'briefcase', bg: 'bg-teal-50 text-teal-700' },
+                    { name: 'Corporate Law', icon: 'scroll', bg: 'bg-yellow-50 text-yellow-700' }
+                ]
+            },
+            categories: [
+                { id: 'MJC', t: 'MJC', d: 'Major Core Course', icon: 'book-open' },
+                { id: 'MIC', t: 'MIC', d: 'Minor Core Course', icon: 'book-type' },
+                { id: 'MDC', t: 'MDC', d: 'Multidisciplinary Course', icon: 'globe' },
+                { id: 'AEC', t: 'AEC', d: 'Ability Enhancement', icon: 'languages' },
+                { id: 'SEC', t: 'SEC', d: 'Skill Enhancement', icon: 'beaker' },
+                { id: 'VAC', t: 'VAC', d: 'Value Added Course', icon: 'leaf' },
+                { id: 'INT', t: 'INT', d: 'Internship', icon: 'briefcase' },
+                { id: 'RP', t: 'RP', d: 'Research Project', icon: 'microscope' }
             ],
-            BSc: [
-                { name: 'Botany', icon: 'leaf', bg: 'bg-green-50 text-green-700' },
-                { name: 'Physics', icon: 'atom', bg: 'bg-blue-50 text-blue-700' },
-                { name: 'Chemistry', icon: 'beaker', bg: 'bg-pink-50 text-pink-700' },
-                { name: 'Mathematics', icon: 'variable', bg: 'bg-cyan-50 text-cyan-700' }
-            ],
-            BCom: [
-                { name: 'Financial Accounting', icon: 'landmark', bg: 'bg-emerald-50 text-emerald-700' },
-                { name: 'Business Management', icon: 'briefcase', bg: 'bg-teal-50 text-teal-700' },
-                { name: 'Corporate Law', icon: 'scroll', bg: 'bg-yellow-50 text-yellow-700' }
-            ]
+            semesters: ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th']
         };
 
-        // REAL CORE DATA BUCKETS
-        const HARDCODED_DB = {
+        // REAL SYLLABUS HIGH FIDELITY STORAGE PACKET
+        const REAL_DATABASE = {
             BSc: {
                 Botany: {
                     MJC: {
-                        '1st': [{ title: "Phycology and Microbiology", code: "MJC-1", credits: "6 Credits Total", theory: { credits: "4 Credits", units: [{ name: "Unit 1: Classification", topics: ["Classification of Plant Kingdom and their important features (Whittaker 1969)", "General characters of Algae, Fungi, Bryophytes."] }, { name: "Unit 2: Algae Structure", topics: ["General characteristics, ecology, life-cycles of Nostoc, Volvox, Chara.", "Economic importance of Algae."] }] }, practical: { credits: "2 Credits", items: [{ name: "Gram staining and cell wall mapping", query: "Gram staining methodology BSc Botany" }] } }],
-                        '3rd': [{ title: "Mycology and Phytopathology", code: "MJC-3", credits: "5 Credits Total", theory: { credits: "3 Credits", units: [{ name: "Unit 1: Fungi", topics: ["General characteristics; Thallus organization; Nutrition; Classification.", "Structural schemas."] }, { name: "Unit 2: Phytopathology", topics: ["Terms and concepts; General symptoms; Host-Pathogen relationships.", "Etiology of plant diseases."] }] }, practical: { credits: "2 Credits", items: [{ name: "1. Mycology slide preparations.", query: "Fungi BSc 1st semester Botany Fungi introduction" }, { name: "2. Phytopathology specimen study.", query: "Phytopathology plant disease symptoms BSc" }] } }]
-                    }
-                },
-                Physics: {
-                    MJC: {
-                        '1st': [{ title: "Mathematical Physics & Mechanics", code: "MJC-1", credits: "6 Credits Total", theory: { credits: "4 Credits", units: [{ name: "Unit 1: Vector Calculus", topics: ["Scalar and Vector products, Gradient, Divergence, Curl and significance.", "Gauss's divergence theorem, Stokes's theorem."] }, { name: "Unit 2: Ordinary Differential Equations", topics: ["First order and second order ordinary differential equations with constants.", "Applications in LCR circuit systems."] }] }, practical: { credits: "2 Credits", items: [{ name: "Flywheel and rotational inertia logging", query: "Flywheel moment of inertia physics practical" }] } }]
+                        '3rd': [
+                            {
+                                title: "Mycology and Phytopathology", code: "MJC-3", totalCredits: "5 Credits Total",
+                                theory: { credits: "Theory (3 Credits)", units: [
+                                    { name: "Unit 1: Fungi", topics: ["General characteristics; Thallus organization; Nutrition; Classification.", "Detailed life lifecycle analysis of basic fungal structures."] },
+                                    { name: "Unit 2: Phytopathology", topics: ["Terms and concepts; General symptoms; Host-Pathogen relationships.", "Etiology and transmission configurations."] }
+                                ]},
+                                practical: { credits: "Practical (2 Credits)", items: [
+                                    { name: "1. Mycology slide preparations.", q: "Fungi B.Sc 1st semester Botany Fungi introduction" },
+                                    { name: "2. Phytopathology specimen study.", q: "Phytopathology plant disease symptoms B.Sc botany" }
+                                ]}
+                            },
+                            {
+                                title: "Archegoniate", code: "MJC-4", totalCredits: "4 Credits Total",
+                                theory: { credits: "Theory (3 Credits)", units: [
+                                    { name: "Unit 1: Bryophytes", topics: ["General Characteristics, Adaptation to land habit, Classification parameters.", "Morphology and reproduction structures analysis."] },
+                                    { name: "Unit 2: Pteridophytes & Gymnosperm", topics: ["General characteristics, classification, stelar evolution mechanics.", "Morphology, anatomy and reproduction profiles of Cycas and Pinus."] }
+                                ]},
+                                practical: { credits: "Practical (1 Credit)", items: [
+                                    { name: "1. Bryophytes reproductive structures investigation.", q: "Bryophytes structural anatomy B.Sc botany" },
+                                    { name: "2. Gymnocpermes vegetative structures tracking.", q: "Gymnosperms anatomy Pinus Cycas B.Sc botany" }
+                                ]}
+                            }
+                        ]
                     }
                 }
             }
         };
 
-        function App() {
-            const [screen, setScreen] = React.useState('home'); 
-            const [selectedProg, setSelectedProg] = React.useState('');
-            const [selectedSub, setSelectedSub] = React.useState('');
-            const [selectedCat, setSelectedCat] = React.useState('');
-            const [selectedSem, setSelectedSem] = React.useState('');
+        // ROUTER AND SCREEN SWITCHER NAVIGATOR
+        function navigate(fromScreen, toScreen, payload = null) {
+            document.getElementById(`screen-${fromScreen}`).classList.add('hidden-screen');
+            document.getElementById(`screen-${toScreen}`).classList.remove('hidden-screen');
+
+            if (fromScreen === 'home' && toScreen === 'subject') {
+                state.prog = payload;
+                buildSubjectScreen();
+            }
+            if (fromScreen === 'subject' && toScreen === 'category') {
+                state.sub = payload;
+                buildCategoryScreen();
+            }
+            if (fromScreen === 'category' && toScreen === 'semester') {
+                state.cat = payload;
+                buildSemesterScreen();
+            }
+            if (fromScreen === 'semester' && toScreen === 'portal') {
+                state.sem = payload;
+                state.tab = 'theory'; // Reset tab state to theory
+                buildPortalScreen();
+            }
             
-            const [activeTabs, setActiveTabs] = React.useState({}); 
-            const [expandedUnits, setExpandedUnits] = React.useState({}); 
+            // Sync all layout parameters
+            document.querySelectorAll('.breadcrumb-prog').forEach(el => el.innerText = state.prog);
+            document.querySelectorAll('.breadcrumb-sub').forEach(el => el.innerText = state.sub);
+            document.querySelectorAll('.breadcrumb-cat').forEach(el => el.innerText = state.cat);
+            document.querySelectorAll('.breadcrumb-sem').forEach(el => el.innerText = state.sem + ' Sem');
+            
+            lucide.createIcons();
+        }
 
-            React.useEffect(() => {
-                if (window.lucide) window.lucide.createIcons();
-            }, [screen, activeTabs, expandedUnits]);
-
-            const launchVideoResource = (topic) => {
-                const finalQuery = `${selectedSub} ${selectedSem} sem ${topic}`;
-                window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(finalQuery)}`, '_blank');
-            };
-
-            const resolveSyllabusData = () => {
-                if (HARDCODED_DB[selectedProg] && HARDCODED_DB[selectedProg][selectedSub] && HARDCODED_DB[selectedProg][selectedSub][selectedCat] && HARDCODED_DB[selectedProg][selectedSub][selectedCat][selectedSem]) {
-                    return HARDCODED_DB[selectedProg][selectedSub][selectedCat][selectedSem];
-                }
-                
-                return [{
-                    title: `${selectedSub} Syllabus Framework`,
-                    code: `${selectedCat}-${selectedSem.replace('st','').replace('nd','').replace('rd','').replace('th','')}`,
-                    credits: "5 Credits Total",
-                    isGenerated: true,
-                    theory: {
-                        credits: "3 Credits",
-                        units: [
-                            { name: "Unit 1: Fundamental Principles & Foundations", topics: [`Introduction to core methodologies of ${selectedSub}`, `Historical overview and basic framework paradigms`] },
-                            { name: "Unit 2: Core Analytical Advancements", topics: [`Detailed structural analytics of ${selectedSub} configurations`, `Practical implementation frameworks and execution case studies`] }
-                        ]
-                    },
-                    practical: {
-                        credits: "2 Credits",
-                        items: [
-                            { name: `1. Field investigative assignment regarding ${selectedSub}`, query: `${selectedSub} assignment topics university standard` },
-                            { name: `2. Structural project case study mapping`, query: `${selectedSub} lecture tutorial series` }
-                        ]
-                    }
-                }];
-            };
-
-            // SCREEN 1: HOME
-            if (screen === 'home') {
-                return (
-                    <div class="smooth-fade space-y-6">
-                        <div class="text-center space-y-1">
-                            <h2 class="text-2xl font-bold text-slate-800">Academic Programs</h2>
-                            <p class="text-xs text-blue-500">Select a faculty to explore specialized subjects, majors, and syllabus details.</p>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-                            <div onClick={() => { setSelectedProg('BA'); setScreen('subject'); }} class="bg-white p-6 rounded-2xl custom-card-shadow text-center border border-gray-100 cursor-pointer transform hover:-translate-y-1 transition-all">
-                                <div class="w-14 h-14 bg-red-50 text-red-800 rounded-2xl flex items-center justify-center mx-auto mb-4"><i data-lucide="library" class="w-6 h-6"></i></div>
-                                <h3 class="text-lg font-bold text-slate-800">B.A</h3>
-                                <p class="text-xs text-slate-400 mt-1">Bachelor of Arts</p>
-                            </div>
-                            <div onClick={() => { setSelectedProg('BSc'); setScreen('subject'); }} class="bg-white p-6 rounded-2xl custom-card-shadow text-center border border-gray-100 cursor-pointer transform hover:-translate-y-1 transition-all">
-                                <div class="w-14 h-14 bg-blue-50 text-blue-800 rounded-2xl flex items-center justify-center mx-auto mb-4"><i data-lucide="atom" class="w-6 h-6"></i></div>
-                                <h3 class="text-lg font-bold text-slate-800">B.Sc</h3>
-                                <p class="text-xs text-slate-400 mt-1">Bachelor of Science</p>
-                            </div>
-                            <div onClick={() => { setSelectedProg('BCom'); setScreen('subject'); }} class="bg-white p-6 rounded-2xl custom-card-shadow text-center border border-gray-100 cursor-pointer transform hover:-translate-y-1 transition-all">
-                                <div class="w-14 h-14 bg-green-50 text-green-800 rounded-2xl flex items-center justify-center mx-auto mb-4"><i data-lucide="landmark" class="w-6 h-6"></i></div>
-                                <h3 class="text-lg font-bold text-slate-800">B.Com</h3>
-                                <p class="text-xs text-slate-400 mt-1">Bachelor of Commerce</p>
+        function buildSubjectScreen() {
+            document.querySelector('.current-prog-label').innerText = `${state.prog} Faculty`;
+            const container = document.getElementById('subject-container');
+            container.innerHTML = '';
+            
+            const subList = CONFIG.subjects[state.prog] || [];
+            subList.forEach(s => {
+                container.innerHTML += `
+                    <div onclick="navigate('subject', 'category', '${s.name}')" class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between cursor-pointer hover:bg-slate-50">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center ${s.bg}"><i data-lucide="${s.icon}"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800">${s.name}</h4>
+                                <p class="text-gray-400" style="font-size:10px">${state.prog} PROGRAM RESOURCE</p>
                             </div>
                         </div>
-                    </div>
-                );
-            }
+                        <i data-lucide="chevron-right" class="text-slate-300 w-5 h-5"></i>
+                    </div>`;
+            });
+        }
 
-            // SCREEN 2: SUBJECTS
-            if (screen === 'subject') {
-                const list = SUBJECTS_MAP[selectedProg] || [];
-                return (
-                    <div class="smooth-fade space-y-6">
-                        <div class="flex items-center gap-2 text-xs font-semibold text-slate-400">
-                            <i data-lucide="home" class="w-3.5 h-3.5"></i> Home <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="text-blue-600">{selectedProg}</span>
-                        </div>
-                        <button onClick={() => setScreen('home')} class="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-white px-3 py-1.5 rounded-lg border shadow-sm"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
+        function buildCategoryScreen() {
+            document.querySelector('.current-sub-label').innerText = `DEPARTMENT OF ${state.sub.toUpperCase()}`;
+            const container = document.getElementById('category-container');
+            container.innerHTML = '';
+
+            CONFIG.categories.forEach(c => {
+                container.innerHTML += `
+                    <div onclick="navigate('category', 'semester', '${c.id}')" class="bg-white p-4 rounded-xl border border-gray-100 shadow-2xs flex flex-col items-center justify-center text-center cursor-pointer hover:bg-slate-50 h-28">
+                        <div class="p-2 rounded-lg bg-slate-50 text-slate-500 mb-2"><i data-lucide="${c.icon}" class="w-5 h-5"></i></div>
+                        <h4 class="font-bold text-slate-800 text-sm">${c.t}</h4>
+                        <p class="text-gray-400 text-center tracking-wide" style="font-size: 9px;">${c.sub}</p>
+                    </div>`;
+            });
+        }
+
+        function buildSemesterScreen() {
+            document.querySelector('.current-cat-label').innerText = `${state.sub} > ${state.cat}`;
+            const container = document.getElementById('semester-container');
+            container.innerHTML = '';
+
+            CONFIG.semesters.forEach(sem => {
+                container.innerHTML += `
+                    <div onclick="navigate('semester', 'portal', '${sem}')" class="bg-white p-5 rounded-xl border border-gray-100 shadow-2xs flex justify-between items-center cursor-pointer hover:bg-slate-50">
                         <div>
-                            <p class="text-xs font-bold text-blue-500 tracking-wider uppercase">{selectedProg} FACULTY</p>
-                            <h2 class="text-2xl font-black text-slate-800 mt-0.5">Select Subject</h2>
+                            <h4 class="text-lg font-black text-slate-800">${sem}</h4>
+                            <p class="text-gray-400" style="font-size:9px;">Semester</p>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {list.map(s => (
-                                <div key={s.name} onClick={() => { setSelectedSub(s.name); setScreen('category'); }} class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between cursor-pointer hover:bg-slate-50">
-                                    <div class="flex items-center gap-4">
-                                        <div class={`w-12 h-12 rounded-xl flex items-center justify-center ${s.bg}`}><i data-lucide={s.icon} class="w-5 h-5"></i></div>
-                                        <div>
-                                            <h4 class="font-bold text-slate-800">{s.name}</h4>
-                                            <p class="text-slate-400" style={{fontSize:'10px'}}>{selectedProg} CORE DISCIPLINE</p>
-                                        </div>
-                                    </div>
-                                    <i data-lucide="chevron-right" class="text-slate-300 w-5 h-5"></i>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                );
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
+                    </div>`;
+            });
+        }
+
+        // GENERATE DYNAMIC ROBUST DATA FOR ALL COMBINATIONS AUTO-TUNED FOR VIDEO LOOK
+        function getSyllabusDataList() {
+            if (REAL_DATABASE[state.prog] && REAL_DATABASE[state.prog][state.sub] && REAL_DATABASE[state.prog][state.sub][state.cat] && REAL_DATABASE[state.prog][state.sub][state.cat][state.sem]) {
+                return REAL_DATABASE[state.prog][state.sub][state.cat][state.sem];
             }
-
-            // SCREEN 3: CATEGORY
-            if (screen === 'category') {
-                const cats = [
-                    { id: 'MJC', t: 'MJC', sub: 'Major Core Course', icon: 'book-open' },
-                    { id: 'MIC', t: 'MIC', sub: 'Minor Core Course', icon: 'book-type' },
-                    { id: 'MDC', t: 'MDC', sub: 'Multidisciplinary', icon: 'globe' },
-                    { id: 'AEC', t: 'AEC', sub: 'Ability Enhancement', icon: 'languages' },
-                    { id: 'SEC', t: 'SEC', sub: 'Skill Enhancement', icon: 'beaker' },
-                    { id: 'VAC', t: 'VAC', sub: 'Value Added Course', icon: 'leaf' }
-                ];
-                return (
-                    <div class="smooth-fade space-y-6">
-                        <div class="flex items-center gap-2 text-xs font-semibold text-slate-400">
-                            <i data-lucide="home" class="w-3.5 h-3.5"></i> Home <i data-lucide="chevron-right" class="w-3 h-3"></i> {selectedProg} <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="text-blue-600">{selectedSub}</span>
-                        </div>
-                        <button onClick={() => setScreen('subject')} class="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-white px-3 py-1.5 rounded-lg border shadow-sm"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
-                        <div class="text-center">
-                            <p class="text-xs font-bold text-blue-500 tracking-wider uppercase">DEPARTMENT OF {selectedSub.toUpperCase()}</p>
-                            <h2 class="text-2xl font-black text-slate-800 mt-0.5">Course Category</h2>
-                        </div>
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            {cats.map(c => (
-                                <div key={c.id} onClick={() => { setSelectedCat(c.id); setScreen('semester'); }} class="bg-white p-4 rounded-xl border border-gray-100 shadow-2xs flex flex-col items-center justify-center text-center cursor-pointer hover:bg-slate-50 h-28">
-                                    <div class="p-2 rounded-lg bg-slate-50 text-slate-500 mb-2"><i data-lucide={c.icon} class="w-5 h-5"></i></div>
-                                    <h4 class="font-bold text-slate-800 text-sm">{c.t}</h4>
-                                    <p class="text-gray-400 text-center tracking-wide" style={{fontSize: '9px'}}>{c.sub}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                );
-            }
-
-            // SCREEN 4: SEMESTERS
-            if (screen === 'semester') {
-                return (
-                    <div class="smooth-fade space-y-6">
-                        <div class="flex items-center gap-2 text-xs font-semibold text-slate-400">
-                            <i data-lucide="home" class="w-3.5 h-3.5"></i> Home <i data-lucide="chevron-right" class="w-3 h-3"></i> {selectedProg} <i data-lucide="chevron-right" class="w-3 h-3"></i> {selectedSub} <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="text-blue-600">{selectedCat}</span>
-                        </div>
-                        <button onClick={() => setScreen('category')} class="flex items-center gap-1.5 text-xs font-bold text-slate-500 bg-white px-3 py-1.5 rounded-lg border shadow-sm"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back</button>
-                        <div>
-                            <p class="text-xs font-bold text-blue-500 tracking-wider uppercase">{selectedSub} &gt; {selectedCat}</p>
-                            <h2 class="text-2xl font-black text-slate-800 mt-0.5">Select Semester</h2>
-                        </div>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            {['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'].map(sem => (
-                                <div key={sem} onClick={() => { setSelectedSem(sem); setScreen('portal'); }} class="bg-white p-5 rounded-xl border border-gray-100 shadow-2xs flex justify-between items-center cursor-pointer hover:bg-slate-50">
-                                    <div>
-                                        <h4 class="text-lg font-black text-slate-800">{sem}</h4>
-                                        <p class="text-gray-400" style={{fontSize:'9px'}}>Semester</p>
-                                    </div>
-                                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-300"></i>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                );
-            }
-
-            // SCREEN 5: FINAL ACADEMIC PORTAL
-            if (screen === 'portal') {
-                const dataset = resolveSyllabusData();
-
-                return (
-                    <div class="smooth-fade max-w-2xl mx-auto space-y-6">
-                        <div class="flex items-center gap-2 text-xs font-semibold text-slate-400">
-                            <i data-lucide="home" class="w-3.5 h-3.5"></i> Home <i data-lucide="chevron-right" class="w-3 h-3"></i> {selectedProg} <i data-lucide="chevron-right" class="w-3 h-3"></i> {selectedSub} <i data-lucide="chevron-right" class="w-3 h-3"></i> {selectedCat} <i data-lucide="chevron-right" class="w-3 h-3"></i> <span class="text-blue-600">{selectedSem} Sem</span>
-                        </div>
-
-                        <div class="text-center space-y-0.5">
-                            <div class="text-xl">🎓</div>
-                            <h2 class="text-xl font-black text-slate-800">Academic Portal</h2>
-                            <p class="text-xs text-slate-400">Detailed syllabus dashboard</p>
-                        </div>
-
-                        <div class="grid grid-cols-4 gap-2 bg-slate-200/60 p-2 rounded-xl text-center border border-slate-300/40">
-                            <div class="bg-white p-1.5 rounded-lg"><p class="text-slate-400" style={{fontSize:'8px'}}>PROGRAM</p><p class="text-xs font-black text-slate-800">{selectedProg}</p></div>
-                            <div class="bg-white p-1.5 rounded-lg"><p class="text-slate-400" style={{fontSize:'8px'}}>SUBJECT</p><p class="text-xs font-black text-slate-800 truncate">{selectedSub}</p></div>
-                            <div class="bg-white p-1.5 rounded-lg"><p class="text-slate-400" style={{fontSize:'8px'}}>CATEGORY</p><p class="text-xs font-black text-slate
+            
+            // AUTOMATIC ALGORITHM DATA MAPPING TO SATISFY ALL UNIVERSAL FIELDS (BA/BSC/BCOM ALL CODES)
+            return [
+                {
+                    title: `${state.sub} Comprehensive System`,
+                    code: `${state.cat}-Core-Module`,
+                    totalCredits: "5 Credits Total",
+                    theory: { credits: "T
