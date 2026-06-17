@@ -5,86 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Syllabus Dashboard</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .active-card { border-color: #fbbf24 !important; opacity: 1 !important; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3); }
+        .active-btn { background-color: #fbbf24 !important; color: #111827 !important; }
+    </style>
 </head>
-<body class="bg-gray-900 text-gray-100 min-h-screen font-sans">
-    <div id="root"></div>
+<body class="bg-gray-900 text-gray-100 min-h-screen font-sans p-4">
 
-    <script type="text/babel">
-        const PROGRAMS = [
-          { id: 'BA', title: 'B.A', subtitle: 'Bachelor of Arts', color: 'from-red-700 to-red-900' },
-          { id: 'BSc', title: 'B.Sc', subtitle: 'Bachelor of Science', color: 'from-blue-700 to-blue-900' },
-          { id: 'BCom', title: 'B.Com', subtitle: 'Bachelor of Commerce', color: 'from-green-700 to-green-900' },
-        ];
+    <div class="max-w-4xl mx-auto space-y-6">
+        <div class="flex items-center gap-4 bg-gray-800 p-4 rounded-xl border border-gray-700 shadow-lg mt-4">
+            <div class="text-3xl">🎓</div>
+            <div>
+                <h1 class="text-xl font-bold text-white">CBCS Syllabus Dashboard</h1>
+                <p class="text-xs text-gray-400">LNMU Buddy - Manage 8-Semester Syllabus</p>
+            </div>
+        </div>
 
-        function App() {
-            const [selectedProg, setSelectedProg] = React.useState('BSc');
-            const [semester, setSemester] = React.useState('1st');
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div id="card-BA" onclick="selectProgram('BA')" class="p-5 rounded-xl bg-gradient-to-br from-red-700 to-red-900 cursor-pointer border-2 border-transparent opacity-60 transition-all transform hover:scale-105">
+                <div class="text-2xl mb-1">📚</div>
+                <h3 class="text-lg font-bold text-white">B.A</h3>
+                <p class="text-xs text-gray-200">Bachelor of Arts</p>
+            </div>
+            <div id="card-BSc" onclick="selectProgram('BSc')" class="p-5 rounded-xl bg-gradient-to-br from-blue-700 to-blue-900 cursor-pointer border-2 border-transparent opacity-60 transition-all transform hover:scale-105 active-card">
+                <div class="text-2xl mb-1">⚛️</div>
+                <h3 class="text-lg font-bold text-white">B.Sc</h3>
+                <p class="text-xs text-gray-200">Bachelor of Science</p>
+            </div>
+            <div id="card-BCom" onclick="selectProgram('BCom')" class="p-5 rounded-xl bg-gradient-to-br from-green-700 to-green-900 cursor-pointer border-2 border-transparent opacity-60 transition-all transform hover:scale-105">
+                <div class="text-2xl mb-1">🏦</div>
+                <h3 class="text-lg font-bold text-white">B.Com</h3>
+                <p class="text-xs text-gray-200">Bachelor of Commerce</p>
+            </div>
+        </div>
 
-            return (
-                <div class="max-w-4xl mx-auto p-4 space-y-6">
-                    {/* Header */}
-                    <div class="flex items-center gap-4 bg-gray-800 p-4 rounded-xl border border-gray-700 shadow-lg mt-4">
-                        <div class="text-3xl">🎓</div>
-                        <div>
-                            <h1 class="text-xl font-bold text-white">CBCS Syllabus Dashboard</h1>
-                            <p class="text-xs text-gray-400">LNMU Buddy - Manage 8-Semester Syllabus</p>
-                        </div>
-                    </div>
-
-                    {/* Program Cards */}
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        {PROGRAMS.map((p) => (
-                            <div 
-                                key={p.id}
-                                onClick={() => setSelectedProg(p.id)}
-                                class={`p-5 rounded-xl bg-gradient-to-br ${p.color} cursor-pointer border-2 transition-all transform hover:scale-105 ${selectedProg === p.id ? 'border-yellow-400 shadow-2xl' : 'border-transparent opacity-60'}`}
-                            >
-                                <div class="text-2xl mb-1">{p.id === 'BA' ? '📚' : p.id === 'BSc' ? '⚛️' : '🏦'}</div>
-                                <h3 class="text-lg font-bold text-white">{p.title}</h3>
-                                <p class="text-xs text-gray-200">{p.subtitle}</p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Semester Selector */}
-                    <div class="bg-gray-800 p-4 rounded-xl border border-gray-700">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Select Semester</label>
-                        <div class="flex flex-wrap gap-2">
-                            {['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'].map((sem) => (
-                                <button 
-                                    key={sem}
-                                    onClick={() => setSemester(sem)}
-                                    class={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${semester === sem ? 'bg-yellow-500 text-gray-900' : 'bg-gray-700 text-gray-200 hover:bg-gray-600'}`}
-                                >
-                                    {sem} Sem
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Syllabus Output */}
-                    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-inner">
-                        <h4 class="text-md font-bold text-white mb-2">📄 Selected Course Details</h4>
-                        <p class="text-xs text-gray-300">Program: <span class="text-yellow-400 font-bold">{selectedProg}</span> | Semester: <span class="text-yellow-400 font-bold">{semester}</span></p>
-                        
-                        {selectedProg === 'BSc' && semester === '1st' ? (
-                            <div class="mt-4 p-4 bg-gray-900 rounded-lg border border-gray-700 space-y-2">
-                                <p class="text-yellow-400 font-bold text-sm">MJC-1: Phycology and Microbiology (Credits: 6)</p>
-                                <p class="text-xs text-gray-400 font-semibold">Unit 1: Classification of Plant Kingdom (Whittaker 1969), Algae, Fungi, Bryophytes.</p>
-                                <p class="text-xs text-gray-400 font-semibold">Unit 2: Algae general characteristics, ecology and distribution.</p>
-                            </div>
-                        ) : (
-                            <p class="text-xs text-gray-500 mt-4 italic">Is semester ka detailed syllabus data add hona baki hai. Aap GitHub par code me ise badal sakte hain.</p>
-                        )}
-                    </div>
+        <div class="bg-gray-800 p-4 rounded-xl border border-gray-700">
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Select Semester</label>
+            <div class="flex flex-wrap gap-2" id="semester-container">
                 </div>
-            );
+        </div>
+
+        <div class="bg-gray-800 p-5 rounded-xl border border-gray-700 shadow-inner">
+            <h4 class="text-md font-bold text-white mb-2">📄 Selected Course Details</h4>
+            <p class="text-xs text-gray-300">Program: <span id="text-program" class="text-yellow-400 font-bold">B.Sc</span> | Semester: <span id="text-semester" class="text-yellow-400 font-bold">1st</span></p>
+            
+            <div id="syllabus-content" class="mt-4">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        // State variables
+        let currentProgram = 'BSc';
+        let currentSemester = '1st';
+
+        const semesters = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'];
+
+        // Render Semester Buttons
+        const semContainer = document.getElementById('semester-container');
+        semesters.forEach(sem => {
+            const btn = document.createElement('button');
+            btn.id = `btn-${sem}`;
+            btn.innerText = `${sem} Sem`;
+            btn.className = `px-3 py-1.5 rounded-lg text-xs font-bold transition-colors bg-gray-700 text-gray-200 hover:bg-gray-600`;
+            btn.onclick = () => selectSemester(sem);
+            semContainer.appendChild(btn);
+        });
+
+        function updateUI() {
+            // Update Text headers
+            document.getElementById('text-program').innerText = currentProgram;
+            document.getElementById('text-semester').innerText = currentSemester;
+
+            // Update Card Active State
+            ['BA', 'BSc', 'BCom'].forEach(p => {
+                document.getElementById(`card-${p}`).classList.remove('active-card');
+            });
+            document.getElementById(`card-${currentProgram}`).classList.add('active-card');
+
+            // Update Semester Button Active State
+            semesters.forEach(sem => {
+                document.getElementById(`btn-${sem}`).classList.remove('active-btn');
+            });
+            document.getElementById(`btn-${currentSemester}`).classList.add('active-btn');
+
+            // Render Content
+            const contentDiv = document.getElementById('syllabus-content');
+            if (currentProgram === 'BSc' && currentSemester === '1st') {
+                contentDiv.innerHTML = `
+                    <div class="p-4 bg-gray-900 rounded-lg border border-gray-700 space-y-2 animate-fade-in">
+                        <p class="text-yellow-400 font-bold text-sm">MJC-1: Phycology and Microbiology (Credits: 6)</p>
+                        <p class="text-xs text-gray-400 font-semibold">Unit 1: Classification of Plant Kingdom (Whittaker 1969), Algae, Fungi, Bryophytes.</p>
+                        <p class="text-xs text-gray-400 font-semibold">Unit 2: Algae general characteristics, ecology and distribution.</p>
+                    </div>
+                `;
+            } else {
+                contentDiv.innerHTML = `
+                    <p class="text-xs text-gray-500 italic">Is semester ka detailed syllabus data abhi add hona baki hai. Aap GitHub par code edit karke naya data jod sakte hain.</p>
+                `;
+            }
         }
 
-        ReactDOM.render(<App />, document.getElementById('root'));
+        function selectProgram(prog) {
+            currentProgram = prog;
+            updateUI();
+        }
+
+        function selectSemester(sem) {
+            currentSemester = sem;
+            updateUI();
+        }
+
+        // Initial Run
+        updateUI();
     </script>
 </body>
 </html>
